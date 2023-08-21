@@ -4,4 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-add-expense',
   templateUrl: './add-expense.component.html',
 })
-export class AddExpenseComponent {}
+export class AddExpenseComponent {
+  showModal: Boolean = false;
+}
