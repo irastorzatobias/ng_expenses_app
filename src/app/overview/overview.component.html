@@ -1,0 +1,18 @@
+<div class="rounded-md border border-zinc-700 p-2">
+  <div class="flex flex-row gap-2 justify-between items-center mb-4">
+    <h1 class="text-xl font-bold">Overview</h1>
+    <p class="font-medium text-zinc-600">{{ currentMonth | date : "MMMM" }}</p>
+  </div>
+
+  <div
+    class="flex flex-row justify-between items-center border-b border-zinc-700"
+  >
+    <p class="font-medium text-zinc-400">Total expenses</p>
+    <h1 class="text-xl font-bold text-green-400">$ 40.000</h1>
+  </div>
+
+  <div class="flex flex-col mt-4">
+    <p class="font-medium text-zinc-400">Spenders</p>
+    <app-overview-spenders/>
+  </div>
+</div>
