@@ -1,18 +1,33 @@
 <div class="rounded-md border border-zinc-800 p-2">
-  <div class="flex flex-row gap-2 justify-between items-center mb-4">
-    <h1 class="text-xl font-bold">Overview</h1>
-    <p class="font-medium text-zinc-600">{{ currentMonth | date : "MMMM" }}</p>
-  </div>
-
   <div
-    class="flex flex-row justify-between items-center border-b border-zinc-800"
+    class="flex flex-row gap-2 justify-between items-center mb-4 border-b border-zinc-800"
   >
-    <p class="font-medium text-zinc-400">Total expenses</p>
-    <h1 class="text-xl font-bold text-green-400">$ 40.000</h1>
+    <h1 class="text-xl font-bold">Overview</h1>
   </div>
 
-  <div class="flex flex-col mt-4">
-    <p class="font-medium text-zinc-400">Spenders</p>
-    <app-overview-spenders/>
-  </div>
+  <table class="min-w-full">
+    <thead>
+      <tr>
+        <th class="text-left text-zinc-400">Month</th>
+        <th class="text-left text-zinc-400">Income</th>
+        <th class="text-left text-zinc-400">Expenses</th>
+        <th class="text-left text-zinc-400">Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let balance of monthlyBalances">
+        <td>{{ balance.month | date: "MMMM" }}</td>
+        <td class="text-green-400">${{ balance.income }}</td>
+        <td class="text-red-400">${{ balance.expenses }}</td>
+        <td
+          [ngClass]="{
+            'text-green-400': balance.balance > 0,
+            'text-red-400': balance.balance < 0
+          }"
+        >
+          ${{ balance.balance }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

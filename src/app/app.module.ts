@@ -9,11 +9,6 @@ import { FilterComponent } from './bills/filter/filter.component';
 import { AddTransactionComponent } from './bills/add-transaction/add-transaction.component';
 import { TransactionListComponent } from './bills/transaction-list/transaction-list.component';
 import { OverviewComponent } from './overview/overview.component';
-import { OverviewExpensesComponent } from './overview/overview-expenses/overview-expenses.component';
-import { OverviewSpendersComponent } from './overview/overview-spenders/overview-spenders.component';
-import { OverviewSpenderComponent } from './overview/overview-spenders/overview-spender/overview-spender.component';
-import { OverviewCategoriesComponent } from './overview/overview-categories/overview-categories.component';
-import { OverviewCategoryComponent } from './overview/overview-categories/overview-category/overview-category.component';
 import { TransactionComponent } from './bills/transaction-list/transaction/transaction.component';
 import { AddCategoryComponent } from './bills/add-category/add-category.component';
 
@@ -26,20 +21,11 @@ import { AddCategoryComponent } from './bills/add-category/add-category.componen
     AddTransactionComponent,
     TransactionListComponent,
     OverviewComponent,
-    OverviewExpensesComponent,
-    OverviewSpendersComponent,
-    OverviewSpenderComponent,
-    OverviewCategoriesComponent,
-    OverviewCategoryComponent,
     TransactionComponent,
     AddCategoryComponent,
   ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, ReactiveFormsModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
