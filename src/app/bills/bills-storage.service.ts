@@ -21,6 +21,7 @@ export class BillsStorageService {
   getItem(key: string): any {
     return JSON.parse(localStorage.getItem(key) || 'null');
   }
+
   removeItem(key: string): void {
     localStorage.removeItem(key);
   }
