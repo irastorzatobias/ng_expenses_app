@@ -26,7 +26,6 @@ export class AddTransactionComponent {
         transactions.push(this.transactionForm.value);
 
         this.billsStorageService.setItem('transactions', transactions);
-        console.log('Gasto agregado:', this.transactionForm.value);
         this.transactionForm.reset();
       }
     }

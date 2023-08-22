@@ -23,8 +23,9 @@ export class AddCategoryComponent {
     if (this.categoryForm.valid) {
       const categories = this.billsStorageService.getItem('categories') || [];
       categories.push(this.categoryForm.value);
+
       this.billsStorageService.setItem('categories', categories);
-      console.log('Categoría agregada:', this.categoryForm.value);
+
       this.categoryForm.reset();
       this.showModal = false;
     }

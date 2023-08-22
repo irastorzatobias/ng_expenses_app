@@ -1,5 +1,5 @@
 <div *ngIf="transactions.length; else noTransactions" class="space-x-1">
-  <app-transaction *ngFor="let transaction of transactions" [transaction]="transaction"></app-transaction>
+  <app-transaction *ngFor="let transaction of filteredTransactions" [transaction]="transaction"></app-transaction>
 </div>
 
 <ng-template #noTransactions>
