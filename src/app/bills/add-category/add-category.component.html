@@ -1,0 +1,45 @@
+<i
+  class="ri-folder-add-fill ri-xl cursor-pointer text-amber-700 hover:text-amber-900 transition-all duration-150"
+  (click)="showModal = true"
+></i>
+
+<div
+  *ngIf="showModal"
+  tabindex="-1"
+  class="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center p-4"
+>
+  <form
+    class="relative w-full max-w-sm bg-white rounded-lg shadow text-black"
+    [formGroup]="categoryForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="relative bg-white rounded-lg shadow">
+      <div class="p-4 border-b rounded-t bg-amber-700 text-center rounded-b-md">
+        <h3 class="text-xl font-semibold text-white">Add category</h3>
+      </div>
+      <input
+        formControlName="name"
+        placeholder="Enter category name"
+        class="w-[80%] p-1 rounded-md bg-gray-100 border border-gray-2 my-2 mx-auto block"
+        required
+      />
+      <div
+        class="flex justify-end p-2 space-x-2 border-t border-gray-200 rounded-b"
+      >
+        <button
+          type="submit"
+          class="text-white bg-amber-600 rounded-lg border text-sm font-medium px-5 py-2.5 focus:z-10 hover:bg-amber-700"
+        >
+          Add
+        </button>
+        <button
+          (click)="showModal = false"
+          type="button"
+          class="text-gray-500 bg-white rounded-lg border text-sm font-medium px-5 py-2.5 hover:bg-gray-100"
+        >
+          Decline
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,9 @@
+<div *ngIf="transactions.length; else noTransactions" class="space-x-1">
+  <app-transaction *ngFor="let transaction of transactions" [transaction]="transaction"></app-transaction>
+</div>
+
+<ng-template #noTransactions>
+  <div class="text-center py-4">
+    No hay gastos registrados.
+  </div>
+</ng-template>

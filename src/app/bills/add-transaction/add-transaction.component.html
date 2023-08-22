@@ -1,0 +1,94 @@
+<i
+  class="ri-money-dollar-circle-fill ri-xl cursor-pointer text-green-700 hover:text-green-900 transition-all duration-150"
+  (click)="showModal = true"
+></i>
+
+<div
+  *ngIf="showModal"
+  tabindex="-1"
+  class="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center p-4"
+>
+  <form
+    [formGroup]="transactionForm"
+    (ngSubmit)="onSubmit()"
+    class="relative w-full max-w-xl bg-white rounded-lg shadow text-black"
+  >
+    <div class="relative bg-white rounded-lg shadow">
+      <div class="p-4 border-b rounded-t bg-green-700 text-center rounded-b-md">
+        <h3 class="text-xl font-semibold text-slate-300">Enter amount</h3>
+        <input
+          formControlName="amount"
+          type="number"
+          min="0"
+          class="text-center text-black border-2 border-gray-700 w-1/2 p-4 rounded-md text-2xl font-bold bg-gray-200"
+          placeholder="666.66"
+          required
+        />
+      </div>
+      <div class="p-4">
+        <p class="text-slate-500">Description</p>
+        <textarea
+          formControlName="description"
+          class="w-full h-14 p-1 rounded-md bg-gray-100 border border-gray-2"
+          style="resize: none"
+        ></textarea>
+
+        <div class="space-y-2">
+          <div>
+            <p class="text-slate-500">Due date</p>
+            <input
+              formControlName="dueDate"
+              type="date"
+              class="w-full p-2 rounded-md bg-gray-100 border border-gray-2"
+              placeholder="666.66"
+              required
+            />
+          </div>
+          <div>
+            <p class="text-slate-500">Category</p>
+            <select
+              formControlName="category"
+              class="w-full py-2 rounded-md bg-gray-100 border border-gray-2"
+              placeholder="666.66"
+              required
+            >
+              <option value="1">Food</option>
+              <option value="2">Rent</option>
+              <option value="3">Utilities</option>
+              <option value="4">Other</option>
+            </select>
+          </div>
+          <div>
+            <p class="text-slate-500">Type</p>
+            <select
+              formControlName="type"
+              class="w-full py-2 rounded-md bg-gray-100 border border-gray-2"
+              placeholder="666.66"
+              required
+            >
+              <option value="1">Income</option>
+              <option value="2">Expense</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex justify-end p-6 space-x-2 border-t border-gray-200 rounded-b"
+      >
+        <button
+          type="submit"
+          class="text-white bg-green-600 rounded-lg border text-sm font-medium px-5 py-2.5 focus:z-10 hover:bg-green-700"
+        >
+          Add
+        </button>
+        <button
+          (click)="showModal = false"
+          type="button"
+          class="text-gray-500 bg-white rounded-lg border text-sm font-medium px-5 py-2.5 hover:bg-gray-100"
+        >
+          Decline
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

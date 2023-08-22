@@ -3,7 +3,10 @@
     class="flex flex-row gap-2 justify-between items-center border-b border-zinc-800 mb-2"
   >
     <h1 class="text-xl font-bold">Bills</h1>
-    <app-add-expense />
+    <div class="space-x-2">
+      <app-add-transaction />
+      <app-add-category />
+    </div>
   </div>
-  <app-expense-list />
+  <app-transaction-list />
 </div>
