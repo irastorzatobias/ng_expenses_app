@@ -49,13 +49,13 @@
             <select
               formControlName="category"
               class="w-full py-2 rounded-md bg-gray-100 border border-gray-2"
-              placeholder="666.66"
               required
             >
-              <option value="1">Food</option>
-              <option value="2">Rent</option>
-              <option value="3">Utilities</option>
-              <option value="4">Other</option>
+            <option value="all" selected>All</option>
+            <option value="general" selected>General</option>
+              <option *ngFor="let category of categories" [value]="category.name">
+                {{ category.name }}
+              </option>
             </select>
           </div>
           <div>

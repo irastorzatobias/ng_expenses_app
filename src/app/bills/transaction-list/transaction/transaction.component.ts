@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Transaction } from 'src/app/models/transaction.model';
-import { BillsStorageService } from '../../bills-storage.service';
+import { StorageService } from '../../storage.service';
 import { FinancialOverviewService } from '../../../overview/financial-overview.service';
 
 @Component({
@@ -11,14 +11,14 @@ export class TransactionComponent {
   @Input() transaction!: Transaction;
 
   constructor(
-    private billStorageService: BillsStorageService,
+    private storageService: StorageService,
     private financialOverviewService: FinancialOverviewService
   ) {}
 
   deleteTransaction(id?: number) {
-    this.billStorageService.removeBill(id);
+    this.storageService.removeBill(id);
 
-    const transactions = this.billStorageService.getItem('transactions');
+    const transactions = this.storageService.getItem('transactions');
 
     this.financialOverviewService.updateTransactions(transactions);
   }

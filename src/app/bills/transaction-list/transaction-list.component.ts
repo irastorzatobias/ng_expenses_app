@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BillsStorageService } from '../bills-storage.service';
+import { StorageService } from '../storage.service';
 import { Subscription } from 'rxjs';
 import { Transaction } from 'src/app/models/transaction.model';
 
@@ -12,28 +12,27 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   filteredTransactions: Transaction[] = [];
   private transactionsSub!: Subscription;
 
-  constructor(private billsStorageService: BillsStorageService) {}
+  constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
-    this.transactions = this.billsStorageService.getItem('transactions') || [];
+    this.transactions = this.storageService.getItem('transactions') || [];
     this.filteredTransactions = this.transactions;
 
-    this.transactionsSub =
-      this.billsStorageService.transactionsUpdated$.subscribe(() => {
-        this.transactions =
-          this.billsStorageService.getItem('transactions') || [];
+    this.transactionsSub = this.storageService.transactionsUpdated$.subscribe(
+      () => {
+        this.transactions = this.storageService.getItem('transactions') || [];
         this.filteredTransactions = this.transactions;
-      });
+      }
+    );
   }
 
   filterByCategory(category: string): void {
-    if (Number(category)) {
-      this.filteredTransactions = this.transactions.filter(
-        (transaction) => transaction.category === category
-      );
-    } else {
-      this.filteredTransactions = this.transactions;
-    }
+    this.filteredTransactions =
+      category === 'all'
+        ? this.transactions
+        : this.transactions.filter(
+            (transaction) => transaction.category === category
+          );
   }
 
   ngOnDestroy(): void {

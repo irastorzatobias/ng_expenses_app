@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BillsStorageService {
+export class StorageService {
   private transactionsUpdated = new Subject<void>();
+  private categoriesSubject = new BehaviorSubject<Array<{ name: string }>>(
+    this.getItem('categories') || []
+  );
+
+  categories$ = this.categoriesSubject.asObservable();
 
   get transactionsUpdated$() {
     return this.transactionsUpdated.asObservable();
@@ -17,6 +22,10 @@ export class BillsStorageService {
 
     if (key === 'transactions') {
       this.transactionsUpdated.next();
+    }
+
+    if (key === 'categories') {
+      this.categoriesSubject.next(value);
     }
   }
 

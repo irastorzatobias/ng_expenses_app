@@ -1,29 +1,45 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { BillsStorageService } from '../bills-storage.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { StorageService } from '../storage.service';
 import { FinancialOverviewService } from 'src/app/overview/financial-overview.service';
 import { Transaction } from 'src/app/models/transaction.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-transaction',
   templateUrl: './add-transaction.component.html',
 })
-export class AddTransactionComponent {
+export class AddTransactionComponent implements OnInit, OnDestroy {
   showModal: Boolean = false;
   transactionForm: FormGroup;
+  categories: Array<{ name: string }> = [];
+
+  private categorySubscription!: Subscription;
 
   constructor(
     private fb: FormBuilder,
-    private billsStorageService: BillsStorageService,
+    private storageService: StorageService,
     private financialOverviewService: FinancialOverviewService
   ) {
     this.transactionForm = this.fb.group({
-      amount: [''],
+      amount: ['', Validators.required],
       description: [''],
-      dueDate: [''],
-      category: [''],
-      type: [''],
+      dueDate: ['', Validators.required],
+      category: ['', Validators.required],
+      type: ['', Validators.required],
     });
+  }
+
+  ngOnInit() {
+    this.categorySubscription = this.storageService.categories$.subscribe(
+      (categories) => {
+        this.categories = categories;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.categorySubscription.unsubscribe();
   }
 
   onSubmit() {
@@ -46,15 +62,17 @@ export class AddTransactionComponent {
     };
 
     transactions.push(transactionWithId);
-    this.billsStorageService.setItem('transactions', transactions);
+    this.storageService.setItem('transactions', transactions);
     this.financialOverviewService.updateTransactions(transactions);
   }
 
   getTransactions(): Transaction[] {
-    return this.billsStorageService.getItem('transactions') || [];
+    return this.storageService.getItem('transactions') || [];
   }
 
   generateUniqueId(transactions: Transaction[]): number {
-    return transactions.length > 0 ? Math.max(...transactions.map((t) => t.id)) + 1 : 1;
+    return transactions.length > 0
+      ? Math.max(...transactions.map((t) => t.id)) + 1
+      : 1;
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BillsStorageService } from '../bills-storage.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-add-category',
@@ -12,7 +12,7 @@ export class AddCategoryComponent {
 
   constructor(
     private fb: FormBuilder,
-    private billsStorageService: BillsStorageService
+    private storageService: StorageService
   ) {
     this.categoryForm = this.fb.group({
       name: ['', Validators.required],
@@ -21,10 +21,10 @@ export class AddCategoryComponent {
 
   onSubmit() {
     if (this.categoryForm.valid) {
-      const categories = this.billsStorageService.getItem('categories') || [];
+      const categories = this.storageService.getItem('categories') || [];
       categories.push(this.categoryForm.value);
 
-      this.billsStorageService.setItem('categories', categories);
+      this.storageService.setItem('categories', categories);
 
       this.categoryForm.reset();
       this.showModal = false;
