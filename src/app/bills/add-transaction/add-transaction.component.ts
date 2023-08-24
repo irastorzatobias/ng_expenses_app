@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BillsStorageService } from '../bills-storage.service';
 import { FinancialOverviewService } from 'src/app/overview/financial-overview.service';
+import { Transaction } from 'src/app/models/transaction.model';
 
 @Component({
   selector: 'app-add-transaction',
@@ -27,13 +28,33 @@ export class AddTransactionComponent {
 
   onSubmit() {
     if (this.transactionForm.valid) {
-      const transactions =
-        this.billsStorageService.getItem('transactions') || [];
-      transactions.push(this.transactionForm.value);
+      const newTransaction: Transaction = this.transactionForm.value;
 
-      this.billsStorageService.setItem('transactions', transactions);
-      this.financialOverviewService.updateTransactions(transactions);
+      this.addTransaction(newTransaction);
+
+      this.showModal = false;
       this.transactionForm.reset();
     }
+  }
+
+  addTransaction(newTransaction: Transaction) {
+    const transactions = this.getTransactions();
+
+    const transactionWithId: Transaction = {
+      ...newTransaction,
+      id: this.generateUniqueId(transactions),
+    };
+
+    transactions.push(transactionWithId);
+    this.billsStorageService.setItem('transactions', transactions);
+    this.financialOverviewService.updateTransactions(transactions);
+  }
+
+  getTransactions(): Transaction[] {
+    return this.billsStorageService.getItem('transactions') || [];
+  }
+
+  generateUniqueId(transactions: Transaction[]): number {
+    return transactions.length > 0 ? Math.max(...transactions.map((t) => t.id)) + 1 : 1;
   }
 }

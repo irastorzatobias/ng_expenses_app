@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MonthlyBalance } from '../models/monthy-balance.model';
 import { Subject } from 'rxjs';
+import { Transaction } from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,12 @@ export class FinancialOverviewService {
 
   constructor() {}
 
-  updateTransactions(transactions: any[]): void {
+  updateTransactions(transactions: Transaction[]): void {
     const updatedBalances = this.calculateMonthlyBalances(transactions);
     this.monthlyBalancesUpdated.next(updatedBalances);
   }
 
-  private calculateMonthlyBalances(transactions: any[]): MonthlyBalance[] {
+  private calculateMonthlyBalances(transactions: Transaction[]): MonthlyBalance[] {
     let monthlyData: { [key: string]: MonthlyBalance } = {};
 
     transactions.forEach((transaction) => {

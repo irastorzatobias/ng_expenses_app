@@ -19,12 +19,13 @@
     <p class="pb-1">$ {{ transaction.amount }}</p>
   </div>
   <div class="mt-2 flex justify-end gap-2">
-    <i
+    <!-- <i
       class="ri-edit-fill bg-cyan-700 px-2 rounded-md cursor-pointer"
       title="Edit transaction"
-    ></i>
+    ></i> -->
     <i
       class="ri-delete-bin-2-fill bg-red-700 px-2 rounded-md cursor-pointer"
+      (click)="deleteTransaction(transaction.id)"
     ></i>
   </div>
 </div>
