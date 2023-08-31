@@ -24,6 +24,12 @@
           placeholder="666.66"
           required
         />
+        <div
+        *ngIf="transactionForm.get('amount')?.hasError('required')"
+        class="text-red-400"
+      >
+        Amount is required!
+      </div>
       </div>
       <div class="p-4">
         <p class="text-slate-500">Description</p>
@@ -43,6 +49,12 @@
               placeholder="666.66"
               required
             />
+            <div
+              *ngIf="transactionForm.get('dueDate')?.hasError('required')"
+              class="text-red-500"
+            >
+              Due date is required!
+            </div>
           </div>
           <div>
             <p class="text-slate-500">Category</p>
@@ -57,6 +69,12 @@
                 {{ category.name }}
               </option>
             </select>
+            <div
+              *ngIf="transactionForm.get('category')?.hasError('required')"
+              class="text-red-500"
+            >
+              Category is required!
+            </div>
           </div>
           <div>
             <p class="text-slate-500">Type</p>
@@ -69,6 +87,12 @@
               <option value="1">Income</option>
               <option value="2">Expense</option>
             </select>
+            <div
+              *ngIf="transactionForm.get('type')?.hasError('required')"
+              class="text-red-500"
+            >
+              Type is required!
+            </div>
           </div>
         </div>
       </div>
