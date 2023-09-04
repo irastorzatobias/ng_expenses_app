@@ -18,6 +18,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   categories: Array<{ name: string }> = [];
 
   private categorySubscription!: Subscription;
+  private transactionSubscription!: Subscription;
 
   constructor(private storageService: StorageService) {}
 
@@ -27,6 +28,12 @@ export class FilterComponent implements OnInit, OnDestroy {
         this.categories = categories;
       }
     );
+
+    this.transactionSubscription = this.storageService.transactionsUpdated$.subscribe(
+     () => {
+      this.selectedCategory = 'all';
+     }
+    )
   }
 
   onCategoryChange() {
@@ -35,5 +42,6 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.categorySubscription.unsubscribe();
+    this.transactionSubscription.unsubscribe();
   }
 }

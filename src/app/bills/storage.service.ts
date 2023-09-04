@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Transaction } from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +12,7 @@ export class StorageService {
 
   categories$ = this.categoriesSubject.asObservable();
 
-  get transactionsUpdated$() {
-    return this.transactionsUpdated.asObservable();
-  }
+  transactionsUpdated$ =  this.transactionsUpdated.asObservable();
 
   setItem(key: string, value: any): void {
     localStorage.setItem(key, JSON.stringify(value));
