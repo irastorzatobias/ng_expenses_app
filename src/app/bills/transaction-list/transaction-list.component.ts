@@ -10,29 +10,28 @@ import { Transaction } from 'src/app/models/transaction.model';
 export class TransactionListComponent implements OnInit, OnDestroy {
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
+
   private transactionsSub!: Subscription;
 
   constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
-    this.transactions = this.storageService.getItem('transactions') || [];
-    this.filteredTransactions = this.transactions;
+    this.fetchTransactions();
 
     this.transactionsSub = this.storageService.transactionsUpdated$.subscribe(
-      () => {
-        this.transactions = this.storageService.getItem('transactions') || [];
-        this.filteredTransactions = this.transactions;
-      }
+      () => this.fetchTransactions()
     );
   }
 
+  private fetchTransactions(): void {
+    this.transactions = this.storageService.getItem('transactions') || [];
+    this.filteredTransactions = [...this.transactions];
+  }
+
   filterByCategory(category: string): void {
-    this.filteredTransactions =
-      category === 'all'
-        ? this.transactions
-        : this.transactions.filter(
-            (transaction) => transaction.category === category
-          );
+    this.filteredTransactions = category === 'all'
+      ? [...this.transactions]
+      : this.transactions.filter(transaction => transaction.category === category);
   }
 
   ngOnDestroy(): void {
