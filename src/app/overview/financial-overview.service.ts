@@ -3,6 +3,11 @@ import { MonthlyBalance } from '../models/monthy-balance.model';
 import { Subject } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
 
+enum Entry {
+  Income  = '1',
+  Expense = '2'
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,28 +26,44 @@ export class FinancialOverviewService {
     let monthlyData: { [key: string]: MonthlyBalance } = {};
 
     transactions.forEach((transaction) => {
-      const date = new Date(transaction.dueDate);
-      const monthYear = `${date.getMonth() + 1}-${date.getFullYear()}`;
-
-      if (!monthlyData[monthYear]) {
-        monthlyData[monthYear] = {
-          month: date,
-          income: 0,
-          expenses: 0,
-          balance: 0,
-        };
-      }
-
-      if (transaction.type === '1') {
-        monthlyData[monthYear].income += transaction.amount;
-      } else if (transaction.type === '2') {
-        monthlyData[monthYear].expenses += transaction.amount;
-      }
-
-      monthlyData[monthYear].balance =
-        monthlyData[monthYear].income - monthlyData[monthYear].expenses;
+      this.updateMonthlyData(transaction, monthlyData);
     });
 
     return Object.values(monthlyData);
+  }
+
+  private updateMonthlyData(transaction: Transaction, monthlyData: { [key: string]: MonthlyBalance }): void {
+    const dateKey = this.getDateKey(transaction.dueDate);
+
+    if (!monthlyData[dateKey]) {
+      monthlyData[dateKey] = this.initializeMonthlyBalance(transaction.dueDate);
+    }
+
+    this.updateBalanceData(transaction, monthlyData[dateKey]);
+  }
+
+  private getDateKey(dueDate: Date): string {
+    const date = new Date(dueDate);
+    return `${date.getMonth() + 1}-${date.getFullYear()}`;
+  }
+
+  private initializeMonthlyBalance(dueDate: Date): MonthlyBalance {
+    const date = new Date(dueDate);
+    return {
+      month: date,
+      income: 0,
+      expenses: 0,
+      balance: 0
+    };
+  }
+
+  private updateBalanceData(transaction: Transaction, monthlyBalance: MonthlyBalance): void {
+    if (transaction.type === Entry.Income) {
+      monthlyBalance.income += transaction.amount;
+    } else if (transaction.type === Entry.Expense) {
+      monthlyBalance.expenses += transaction.amount;
+    }
+
+    monthlyBalance.balance = monthlyBalance.income - monthlyBalance.expenses;
   }
 }

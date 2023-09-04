@@ -15,11 +15,15 @@ export class TransactionComponent {
     private financialOverviewService: FinancialOverviewService
   ) {}
 
-  deleteTransaction(id?: number) {
-    this.storageService.removeBill(id);
+  deleteTransaction(id: number) {
+    let transactions = this.storageService.getItem('transactions') || [];
 
-    const transactions = this.storageService.getItem('transactions');
+    const updatedTransactions = transactions.filter(
+      (t: Transaction) => t.id !== id
+    );
 
-    this.financialOverviewService.updateTransactions(transactions);
+    this.storageService.setItem('transactions', updatedTransactions);
+
+    this.financialOverviewService.updateTransactions(updatedTransactions);
   }
 }

@@ -38,16 +38,6 @@ export class StorageService {
     }
   }
 
-  removeBill(id?: number): void {
-    let transactions = this.getItem('transactions') || [];
-
-    const updatedTransactions = transactions.filter(
-      (t: Transaction) => t.id !== id
-    );
-
-    this.setItem('transactions', updatedTransactions);
-  }
-
   clear(): void {
     localStorage.clear();
   }

@@ -25,11 +25,11 @@
           required
         />
         <div
-        *ngIf="transactionForm.get('amount')?.hasError('required')"
-        class="text-red-400"
-      >
-        Amount is required!
-      </div>
+          *ngIf="transactionForm.get('amount')?.hasError('required')"
+          class="text-red-500 font-bold"
+        >
+          Amount is required!
+        </div>
       </div>
       <div class="p-4">
         <p class="text-slate-500">Description</p>
@@ -63,9 +63,12 @@
               class="w-full py-2 rounded-md bg-gray-100 border border-gray-2"
               required
             >
-            <option value="all" selected>All</option>
-            <option value="general" selected>General</option>
-              <option *ngFor="let category of categories" [value]="category.name">
+              <option value="all" selected>All</option>
+              <option value="general" selected>General</option>
+              <option
+                *ngFor="let category of categories"
+                [value]="category.name"
+              >
                 {{ category.name }}
               </option>
             </select>
@@ -110,7 +113,7 @@
           type="button"
           class="text-gray-500 bg-white rounded-lg border text-sm font-medium px-5 py-2.5 hover:bg-gray-100"
         >
-          Decline
+          Close
         </button>
       </div>
     </div>
