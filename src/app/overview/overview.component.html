@@ -16,7 +16,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let balance of monthlyBalances">
-        <td>{{ balance.month | date: "MMMM" }}</td>
+        <td>{{ balance.month | date: "MMMM YY" }}</td>
         <td class="text-green-400">${{ balance.income }}</td>
         <td class="text-red-400">${{ balance.expenses }}</td>
         <td
